@@ -7,7 +7,7 @@
 body,
 h1,
 h2,
-h3 {
+p{
   margin: 0;
 }
 
@@ -31,4 +31,17 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+#historyList {
+  max-height: 250px;
+  overflow-y: auto;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+p:not(:last-child) {
+  margin-bottom: 16px;
 }

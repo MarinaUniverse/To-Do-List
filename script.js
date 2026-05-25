@@ -39,9 +39,12 @@ function workWithHistory(newHistoryItem) {
     console.log("Немає збереженої історії завдань.");
   }
 
-  const updatedHistory = [history, newHistoryItem];
+  const updatedHistory = [...history, newHistoryItem];
   localStorage.setItem("tasksHistory", JSON.stringify(updatedHistory));
   console.log("Історія завдань оновлена в localStorage.");
+
+  // Додаємо історію завдань на сторінку в Список історії
+  showLastHistoryList();
 }
 
 function getNewHistoryItem(action, id, time, text, newText = null) {
@@ -53,15 +56,33 @@ function getNewHistoryItem(action, id, time, text, newText = null) {
     message: null,
   };
   if (action === ACTIONS.ADD) {
-    newHistoryItem.message = `Завдання ${text} з ID ${id} було додано до списку.`;
+    newHistoryItem.message = `Завдання "${text}" з ID ${id} було додано до списку.`;
   } else if (action === ACTIONS.DELETE) {
-    newHistoryItem.message = `Завдання ${text} з ID ${id} було видалено зі списку.`;
+    newHistoryItem.message = `Завдання "${text}" з ID ${id} було видалено зі списку.`;
   } else if (action === ACTIONS.EDIT) {
-    newHistoryItem.message = `Завдання ${text} з ID ${id} було відредаговано на ${newText}.`;
+    newHistoryItem.message = `Завдання "${text}" з ID ${id} було відредаговано на "${newText}".`;
   }
   console.log(newHistoryItem);
 
   return newHistoryItem;
+}
+
+function showHistoryList() {
+  const allHistory = JSON.parse(localStorage.getItem("tasksHistory")) || [];
+  console.log(allHistory);
+
+  for (let i = allHistory.length - 1; i >= 0; i--) {
+    let historyItem = document.createElement("p");
+    historyItem.textContent = allHistory[i].message;
+    historyList.appendChild(historyItem);
+  }
+}
+
+function showLastHistoryList() {
+  const allHistory = JSON.parse(localStorage.getItem("tasksHistory")) || [];
+  let historyItem = document.createElement("p");
+  historyItem.textContent = allHistory[allHistory.length - 1].message;
+  historyList.prepend(historyItem);
 }
 
 form.addEventListener("submit", (event) => {
@@ -108,7 +129,6 @@ form.addEventListener("submit", (event) => {
 
   //   Створюємо масив до історії завдань, беремо дані з localStorage, конкатенуємо масиви та зберігаємо в localStorage
 
-  //   workWithHistory(newTask);
   let newHistoryItem = getNewHistoryItem(
     ACTIONS.ADD,
     newTask.taskID,
@@ -121,8 +141,6 @@ form.addEventListener("submit", (event) => {
   // Додаємо останню таску на сторінку в Список завдань
   showLastToDoElement();
 });
-// Додаємо таски на сторінку в Список завдань
-showToDoList();
 
 // Видалення таски зі списку та localStorage
 taskList.addEventListener("contextmenu", (event) => {
@@ -193,3 +211,9 @@ taskList.addEventListener("click", (event) => {
   );
   workWithHistory(newHistoryItem);
 });
+
+// Додаємо таски на сторінку в Список завдань
+showToDoList();
+// // Додаємо історію завдань на сторінку в Список історії
+showHistoryList();
+
