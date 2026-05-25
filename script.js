@@ -185,9 +185,13 @@ taskList.addEventListener("click", (event) => {
     "Введіть новий текст завдання:",
     clickedTask.textContent,
   );
-  if (newTaskText) {
-    clickedTask.textContent = newTaskText;
-  }
+//   if (newTaskText) {
+    if (newTaskText === null) {
+      return;
+    } else {
+      clickedTask.textContent = newTaskText;
+    }
+//   }
   console.log(clickedTask.textContent);
 
   // Редагуємо таску в localStorage
