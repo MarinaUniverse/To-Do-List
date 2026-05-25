@@ -30,7 +30,7 @@ function showLastToDoElement() {
   console.log(allTasks);
 }
 
-function workWithHistory(newTask) {
+function workWithHistory(newHistoryItem) {
   let history = [];
   let storedHistory = localStorage.getItem("tasksHistory");
   if (storedHistory) {
@@ -39,27 +39,30 @@ function workWithHistory(newTask) {
     console.log("Немає збереженої історії завдань.");
   }
 
-  let newHistoryItem = getNewHistoryItem(ACTIONS.ADD,newTask.taskID, newTask.taskText, currentTime);
-
   const updatedHistory = [history, newHistoryItem];
   localStorage.setItem("tasksHistory", JSON.stringify(updatedHistory));
   console.log("Історія завдань оновлена в localStorage.");
-  
 }
 
-function getNewHistoryItem(action, id, text, time) {
+function getNewHistoryItem(action, id, time, text, newText = null) {
   let newHistoryItem = {
     action: action,
     taskID: id,
     taskText: text,
     time: time,
-    message: `Завдання ${text} з ID ${id} було ${action === ACTIONS.ADD ? "додано" : action === ACTIONS.DELETE ? "видалено" : "відредаговано"}. Час дії: ${time}`,
+    message: null,
   };
+  if (action === ACTIONS.ADD) {
+    newHistoryItem.message = `Завдання ${text} з ID ${id} було додано до списку.`;
+  } else if (action === ACTIONS.DELETE) {
+    newHistoryItem.message = `Завдання ${text} з ID ${id} було видалено зі списку.`;
+  } else if (action === ACTIONS.EDIT) {
+    newHistoryItem.message = `Завдання ${text} з ID ${id} було відредаговано на ${newText}.`;
+  }
   console.log(newHistoryItem);
 
   return newHistoryItem;
 }
-
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -105,7 +108,15 @@ form.addEventListener("submit", (event) => {
 
   //   Створюємо масив до історії завдань, беремо дані з localStorage, конкатенуємо масиви та зберігаємо в localStorage
 
-  workWithHistory(newTask);
+  //   workWithHistory(newTask);
+  let newHistoryItem = getNewHistoryItem(
+    ACTIONS.ADD,
+    newTask.taskID,
+    currentTime,
+    newTask.taskText,
+  );
+
+  workWithHistory(newHistoryItem);
 
   // Додаємо останню таску на сторінку в Список завдань
   showLastToDoElement();
@@ -120,6 +131,7 @@ taskList.addEventListener("contextmenu", (event) => {
   //   console.log(clickedTask);
   const clickedTaskId = event.target.id;
   //   console.log(clickedTaskId);
+  const clickedTaskText = event.target.textContent;
   taskList.removeChild(clickedTask);
 
   // Видаляємо таску з localStorage
@@ -138,7 +150,9 @@ taskList.addEventListener("contextmenu", (event) => {
     ACTIONS.DELETE,
     clickedTaskId,
     currentTime,
+    clickedTaskText,
   );
+  workWithHistory(newHistoryItem);
 });
 
 // Редагування таски зі списку та localStorage
@@ -146,6 +160,8 @@ taskList.addEventListener("click", (event) => {
   event.preventDefault();
   const clickedTask = event.target;
   const clickedTaskId = event.target.id;
+  const clickedTaskText = event.target.textContent;
+  console.log(clickedTaskText);
 
   const newTaskText = prompt(
     "Введіть новий текст завдання:",
@@ -167,9 +183,13 @@ taskList.addEventListener("click", (event) => {
   }
   localStorage.setItem("userTasks", JSON.stringify(allTasks));
   console.log("Завдання відредаговано в localStorage.");
+
   let newHistoryItem = getNewHistoryItem(
     ACTIONS.EDIT,
     clickedTaskId,
     currentTime,
+    clickedTaskText,
+    newTaskText,
   );
+  workWithHistory(newHistoryItem);
 });
