@@ -68,6 +68,8 @@ function getNewHistoryItem(action, id, time, text, newText = null) {
 }
 
 function showHistoryList() {
+
+    historyList.innerHTML = ""; // Очистка списку історії перед додаванням нових елементів
   const allHistory = JSON.parse(localStorage.getItem("tasksHistory")) || [];
   console.log(allHistory);
 
@@ -221,3 +223,7 @@ showToDoList();
 // // Додаємо історію завдань на сторінку в Список історії
 showHistoryList();
 
+clearHistoryButton.addEventListener("click", () => {
+  localStorage.removeItem("tasksHistory");
+  showHistoryList();
+});
