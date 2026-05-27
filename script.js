@@ -68,23 +68,42 @@ function getNewHistoryItem(action, id, time, text, newText = null) {
 }
 
 function showHistoryList() {
-
-    historyList.innerHTML = ""; // Очистка списку історії перед додаванням нових елементів
+  historyList.innerHTML = ""; // Очистка списку історії перед додаванням нових елементів
   const allHistory = JSON.parse(localStorage.getItem("tasksHistory")) || [];
   console.log(allHistory);
 
   for (let i = allHistory.length - 1; i >= 0; i--) {
+    let historyWrapContainer = document.createElement("div");
+    historyWrapContainer.classList.add("history-wrap-container");
+
     let historyItem = document.createElement("p");
     historyItem.textContent = allHistory[i].message;
-    historyList.appendChild(historyItem);
+
+    let historyTimeItem = document.createElement("span");
+    historyTimeItem.textContent = allHistory[i].time;
+    /////// ЗУПИНИЛАСЬ ТУТ!!!!!!
+
+    historyWrapContainer.appendChild(historyItem);
+    historyWrapContainer.appendChild(historyTimeItem);
+    historyList.appendChild(historyWrapContainer);
   }
 }
 
 function showLastHistoryList() {
   const allHistory = JSON.parse(localStorage.getItem("tasksHistory")) || [];
+
+  let historyWrapContainer = document.createElement("div");
+  historyWrapContainer.classList.add("history-wrap-container");
+
   let historyItem = document.createElement("p");
   historyItem.textContent = allHistory[allHistory.length - 1].message;
-  historyList.prepend(historyItem);
+
+  let historyTimeItem = document.createElement("span");
+  historyTimeItem.textContent = allHistory[allHistory.length - 1].time;
+  
+  historyWrapContainer.appendChild(historyItem);
+  historyWrapContainer.appendChild(historyTimeItem);
+  historyList.prepend(historyWrapContainer);
 }
 
 form.addEventListener("submit", (event) => {
@@ -187,13 +206,13 @@ taskList.addEventListener("click", (event) => {
     "Введіть новий текст завдання:",
     clickedTask.textContent,
   );
-//   if (newTaskText) {
-    if (newTaskText === null) {
-      return;
-    } else {
-      clickedTask.textContent = newTaskText;
-    }
-//   }
+  //   if (newTaskText) {
+  if (newTaskText === null) {
+    return;
+  } else {
+    clickedTask.textContent = newTaskText;
+  }
+  //   }
   console.log(clickedTask.textContent);
 
   // Редагуємо таску в localStorage

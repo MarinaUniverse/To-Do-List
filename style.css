@@ -7,8 +7,10 @@
 body,
 h1,
 h2,
-p{
+h3,
+p {
   margin: 0;
+  padding: 0;
 }
 
 /* ul,
@@ -23,17 +25,121 @@ body {
   height: 100%;
   width: 100%;
 }
-
-body {
+.container {
+  max-width: 1200px;
   margin: 0 auto;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.fbx {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
+body {
+  font-family: "Poppins", sans-serif;
+  padding: 40px 20px;
+  background: #eef2ff;
+  color: #1e293b;
+}
+
+.wrapper {
+  margin-top: 50px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  background: #f8fafc;
+  border-radius: 32px;
+  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
+}
+
+header.fbx {
+  margin-bottom: 32px;
+}
+
+h1 {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 400;
+  color: #94a3b8;
+}
+
+main {
+  width: 100%;
+}
+
+form#toDoList {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+  margin-bottom: 16px;
+  background: white;
+}
+
+input#taskInput {
+  flex: 1;
+  height: 64px;
+  padding: 18px;
+  border: 2px solid #c7d2fe;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 500;
+  outline: none;
+}
+
+input#taskInput:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+input#taskInput::placeholder {
+  color: #94a3b8;
+}
+
+.addNewTaskBtn {
+  border: none;
+  cursor: pointer;
+  height: 64px;
+  width: 150px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.addNewTaskBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.25);
+}
+
+section.wrapperResults {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  padding: 30px 20px;
+}
+
 #historyList {
+  /* max-width: 90vw; */
+  /* width: 100%; */
   max-height: 250px;
   overflow-y: auto;
   width: 100%;
@@ -42,6 +148,14 @@ body {
   border-radius: 8px;
 }
 
-p:not(:last-child) {
+.history-wrap-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* gap: 80px; */
+}
+
+.history-wrap-container:not(:last-child) {
   margin-bottom: 16px;
 }

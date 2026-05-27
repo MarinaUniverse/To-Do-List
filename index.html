@@ -8,26 +8,36 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header>
-      <h1>To Do List</h1>
-    </header>
-    <br>
-    <form action="" id="toDoList">
-      <input
-        type="text"
-        name="task"
-        id="taskInput"
-        placeholder="Введіть нове завдання"
-      />
-      <button type="submit">Додати</button>
-    </form>
-<br>
-    <h2>Список завдань:</h2>
-    <ul id="taskList"></ul>
-<br>
-    <h2>Історія змін:</h2>
-    <div id="historyList"></div>
-    <button id="clearHistoryButton">Очистити історію</button>
+    <div class="wrapper fbx container">
+      <header class="fbx container">
+        <h1>To Do List</h1>
+        <h2>Плануй день та досягай більшого</h2>
+      </header>
+      <main class="fbx">
+        <form action="" id="toDoList">
+          <input
+            type="text"
+            name="task"
+            id="taskInput"
+            placeholder="Введіть нове завдання"
+          />
+          <button type="submit" class="addNewTaskBtn">Додати</button>
+        </form>
+
+        <section class="wrapperResults fbx">
+          <div class="wrapperTasks">
+            <h3>Список завдань:</h3>
+            <ul id="taskList"></ul>
+          </div>
+
+          <div class="wrapperHistory">
+            <h3>Історія змін:</h3>
+            <div id="historyList"></div>
+            <button id="clearHistoryButton">Очистити історію</button>
+          </div>
+        </section>
+      </main>
+    </div>
     <script src="./script.js"></script>
   </body>
 </html>
