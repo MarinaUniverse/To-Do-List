@@ -20,6 +20,7 @@ function showToDoList() {
     taskItem.setAttribute("id", allTasks[i].taskID);
     taskList.appendChild(taskItem);
   }
+
 }
 function showLastToDoElement() {
   const allTasks = JSON.parse(localStorage.getItem("userTasks"));
@@ -78,14 +79,17 @@ function showHistoryList() {
 
     let historyItem = document.createElement("p");
     historyItem.textContent = allHistory[i].message;
+    // historyItem.classList.add("history-item");
 
     let historyTimeItem = document.createElement("span");
     historyTimeItem.textContent = allHistory[i].time;
+    historyTimeItem.classList.add("history-time-item");
     /////// ЗУПИНИЛАСЬ ТУТ!!!!!!
 
     historyWrapContainer.appendChild(historyItem);
     historyWrapContainer.appendChild(historyTimeItem);
     historyList.appendChild(historyWrapContainer);
+    
   }
 }
 
@@ -100,7 +104,8 @@ function showLastHistoryList() {
 
   let historyTimeItem = document.createElement("span");
   historyTimeItem.textContent = allHistory[allHistory.length - 1].time;
-  
+  historyTimeItem.classList.add("history-time-item");
+
   historyWrapContainer.appendChild(historyItem);
   historyWrapContainer.appendChild(historyTimeItem);
   historyList.prepend(historyWrapContainer);
